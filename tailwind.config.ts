@@ -68,6 +68,9 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+			},
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],
 				'noto-jp': ['Noto Sans JP', 'sans-serif'],

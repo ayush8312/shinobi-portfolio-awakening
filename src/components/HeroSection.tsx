@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import BattleScene from '@/components/BattleScene';
+import VFXEffect from '@/components/VFXEffect';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [textIndex, setTextIndex] = useState(0);
+  const [showVFX, setShowVFX] = useState(false);
   
   const titles = [
     "Developer Shinobi",
@@ -16,6 +19,8 @@ const HeroSection = () => {
     setIsVisible(true);
     const interval = setInterval(() => {
       setTextIndex((prev) => (prev + 1) % titles.length);
+      setShowVFX(true);
+      setTimeout(() => setShowVFX(false), 2000);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -115,6 +120,12 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Battle Scene Background */}
+      <BattleScene />
+      
+      {/* VFX Effects */}
+      <VFXEffect type="chakra-surge" trigger={showVFX} intensity="medium" />
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">

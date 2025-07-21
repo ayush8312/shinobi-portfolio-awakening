@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
+import VFXEffect from '@/components/VFXEffect';
 
 interface Weapon {
   name: string;
@@ -13,6 +14,7 @@ interface Weapon {
 const TechStackSection = () => {
   const [hoveredWeapon, setHoveredWeapon] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState(true);
+  const [showLightning, setShowLightning] = useState(false);
 
   const weapons: Weapon[] = [
     { name: "Python", category: "Primary Weapon", proficiency: 95, icon: "🐍", description: "The serpent's wisdom for data manipulation and AI", color: "text-blue-500" },
@@ -27,11 +29,24 @@ const TechStackSection = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => setIsSpinning(false), 3000);
-    return () => clearTimeout(timer);
+    
+    // Lightning effect every 8 seconds
+    const lightningInterval = setInterval(() => {
+      setShowLightning(true);
+      setTimeout(() => setShowLightning(false), 2000);
+    }, 8000);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(lightningInterval);
+    };
   }, []);
 
   return (
     <section className="py-20 px-6 relative overflow-hidden">
+      {/* VFX Effects */}
+      <VFXEffect type="lightning-storm" trigger={showLightning} intensity="medium" />
+      
       {/* Section Header */}
       <div className="max-w-6xl mx-auto text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">

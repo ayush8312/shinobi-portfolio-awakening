@@ -3,6 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Github } from 'lucide-react';
+import VFXEffect from '@/components/VFXEffect';
+import BattleScene from '@/components/BattleScene';
 
 interface Project {
   title: string;
@@ -18,6 +20,7 @@ interface Project {
 
 const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [showExplosion, setShowExplosion] = useState(false);
 
   const projects: Project[] = [
     {
@@ -85,6 +88,14 @@ const ProjectsSection = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-background" />
       
+      {/* Background Battle Scene */}
+      <div className="absolute inset-0 pointer-events-none">
+        <BattleScene />
+      </div>
+      
+      {/* VFX Effects */}
+      <VFXEffect type="explosion" trigger={showExplosion} intensity="high" />
+
       {/* Section Header */}
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="text-center mb-16">
@@ -108,7 +119,11 @@ const ProjectsSection = () => {
               className={`group relative overflow-hidden chakra-glow hover:scale-105 transition-all duration-500 cursor-pointer ${
                 selectedProject === index ? 'ring-2 ring-primary' : ''
               }`}
-              onClick={() => setSelectedProject(selectedProject === index ? null : index)}
+              onClick={() => {
+                setSelectedProject(selectedProject === index ? null : index);
+                setShowExplosion(true);
+                setTimeout(() => setShowExplosion(false), 2000);
+              }}
             >
               {/* Difficulty Badge */}
               <div className="absolute top-4 right-4 z-20">
